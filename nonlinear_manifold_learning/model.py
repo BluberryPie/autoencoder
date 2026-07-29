@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 
+import torch
 import torch.nn as nn
 
 
@@ -19,3 +20,14 @@ class AutoEncoder(nn.Module):
             layers.append(nn.Linear(in_features=d_in, out_features=d_out))
             layers.append(activation())
         return nn.Sequential(*layers[:-1])
+
+    def encode(self, input: torch.Tensor) -> torch.Tensor:
+        return self.encoder(input)
+
+    def decode(self, latent: torch.Tensor) -> torch.Tensor:
+        return self.decoder(latent)
+
+    def forward(self, input: torch.Tensor) -> torch.Tensor:
+        latent = self.encode(input)
+        reconstructed = self.decode(latent)
+        return reconstructed
