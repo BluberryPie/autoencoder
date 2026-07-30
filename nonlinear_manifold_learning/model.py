@@ -9,8 +9,8 @@ class AutoEncoder(nn.Module):
         super().__init__()
         enc_layer_sizes: list[int] = [input_dim, *hidden_dims, latent_dim]
         dec_layer_sizes: list[int] = [latent_dim, *reversed(hidden_dims), input_dim]
-        self.encoder = self._build_mlp(enc_layer_sizes)
-        self.decoder = self._build_mlp(dec_layer_sizes)
+        self.encoder = self._build_mlp(enc_layer_sizes, activation=nn.Tanh)
+        self.decoder = self._build_mlp(dec_layer_sizes, activation=nn.Tanh)
 
     def _build_mlp(
         self, layer_sizes: Sequence[int], activation: type[nn.Module] = nn.ReLU
