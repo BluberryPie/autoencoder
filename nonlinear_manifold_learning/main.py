@@ -65,6 +65,14 @@ def main():
     fig.tight_layout()
     plt.show()
 
+    fig, axes = plt.subplots(nrows=1, ncols=2, subplot_kw={"projection": "3d"})
+    plot_swiss_roll(X_raw, t, axes[0], label="t")
+    plot_swiss_roll(X_reconstructed, t, axes[1], label="t")
+    axes[0].set_title("Original")
+    axes[1].set_title("Reconstructed")
+    fig.tight_layout()
+    plt.show()
+
 
 if __name__ == "__main__":
     main()
