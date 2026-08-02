@@ -9,6 +9,7 @@ from torch.utils.data import DataLoader
 from config import Config
 from data import load_mnist
 from model import AutoEncoder, TiedAutoEncoder
+from visualize import plot_loss_curves
 
 
 ModelType = AutoEncoder | TiedAutoEncoder
@@ -90,12 +91,10 @@ def main():
 
     # Plot loss curves for both models
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 5))
-    axes[0].plot(ae_train_losses)
-    axes[0].plot(ae_eval_losses, color="tab:orange")
-    axes[0].set_title("Base AutoEncoder Loss")
-    axes[1].plot(tied_ae_train_losses)
-    axes[1].plot(tied_ae_eval_losses, color="tab:orange")
-    axes[1].set_title("Tied AutoEncoder Loss")
+    plot_loss_curves(ae_train_losses, ae_eval_losses, axes[0], "Base AutoEncoder Loss")
+    plot_loss_curves(
+        tied_ae_train_losses, tied_ae_eval_losses, axes[1], "Tied AutoEncoder Loss"
+    )
     fig.tight_layout()
     plt.show()
 
