@@ -21,7 +21,9 @@ def load_mnist(batch_size: int, data_dir: str) -> tuple[DataLoader, DataLoader]:
         transform=mnist_transform,
     )
     train_dataloader = DataLoader(
-        dataset=train_dataset, batch_size=batch_size, shuffle=True
+        dataset=train_dataset, batch_size=batch_size, shuffle=True, drop_last=True
     )
-    test_dataloader = DataLoader(dataset=test_dataset, batch_size=batch_size)
+    test_dataloader = DataLoader(
+        dataset=test_dataset, batch_size=batch_size, drop_last=True
+    )
     return train_dataloader, test_dataloader
