@@ -69,3 +69,43 @@ def plot_reconstructions(
     # Switch the models back to training mode
     ae.train()
     tied_ae.train()
+
+
+@torch.no_grad()
+def plot_weight_filters(ae: AutoEncoder, tied_ae: TiedAutoEncoder, num_cols: int):
+    # Switch the models to evaluation mode
+    ae.eval()
+    tied_ae.eval()
+
+    fig = plt.figure(figsize=(12, 6))
+    subfigs = fig.subfigures(nrows=1, ncols=2)
+
+    subfigs[0].suptitle("Weight Filters (Base Model)")
+    axes = subfigs[0].subplots(nrows=4, ncols=num_cols)
+    weight = ae.encoder[0].weight.detach()
+    crange_max = weight.abs().max().item()
+    for row in range(4):
+        for col in range(num_cols):
+            axis = axes[row][col]
+            image = weight[row*num_cols + col].reshape(28, 28)
+            axis.imshow(image, cmap="RdBu", vmin=-crange_max, vmax=crange_max)
+            axis.set_xticks([])
+            axis.set_yticks([])
+
+    subfigs[1].suptitle("Weight Filters (Tied Model)")
+    axes = subfigs[1].subplots(nrows=4, ncols=num_cols)
+    weight = tied_ae.encoder.layers[0].weight.detach()
+    crange_max = weight.abs().max().item()
+    for row in range(4):
+        for col in range(num_cols):
+            axis = axes[row][col]
+            image = weight[row*num_cols + col].reshape(28, 28)
+            axis.imshow(image, cmap="RdBu", vmin=-crange_max, vmax=crange_max)
+            axis.set_xticks([])
+            axis.set_yticks([])
+
+    plt.show()
+
+    # Switch the models back to training mode
+    ae.train()
+    tied_ae.train()

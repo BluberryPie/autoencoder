@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 from config import Config
 from data import load_mnist
 from model import AutoEncoder, TiedAutoEncoder
-from visualize import plot_loss_curves, plot_reconstructions
+from visualize import plot_loss_curves, plot_reconstructions, plot_weight_filters
 
 
 ModelType = AutoEncoder | TiedAutoEncoder
@@ -100,6 +100,9 @@ def main():
 
     # Plot the reconstruction results for both models
     plot_reconstructions(test_loader, ae, tied_ae)
+
+    # Plot the weight filters of the first layer for both models
+    plot_weight_filters(ae, tied_ae, num_cols=config.hidden_dims[0] // 4)
 
 
 if __name__ == "__main__":
