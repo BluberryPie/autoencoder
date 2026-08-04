@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 from config import Config
 from data import load_mnist
 from model import AutoEncoder, TiedAutoEncoder
-from visualize import plot_loss_curves
+from visualize import plot_loss_curves, plot_reconstructions
 
 
 ModelType = AutoEncoder | TiedAutoEncoder
@@ -97,6 +97,9 @@ def main():
     )
     fig.tight_layout()
     plt.show()
+
+    # Plot the reconstruction results for both models
+    plot_reconstructions(test_loader, ae, tied_ae)
 
 
 if __name__ == "__main__":
