@@ -90,13 +90,7 @@ def main():
     )
 
     # Plot loss curves for both models
-    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 5))
-    plot_loss_curves(ae_train_losses, ae_eval_losses, axes[0], "Base AutoEncoder Loss")
-    plot_loss_curves(
-        tied_ae_train_losses, tied_ae_eval_losses, axes[1], "Tied AutoEncoder Loss"
-    )
-    fig.tight_layout()
-    plt.show()
+    plot_loss_curves(ae_train_losses, ae_eval_losses)
 
     # Plot the reconstruction results for both models
     plot_reconstructions(test_loader, ae, tied_ae)

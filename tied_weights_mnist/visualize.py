@@ -6,12 +6,14 @@ from torch.utils.data import Dataset, DataLoader
 from model import AutoEncoder, TiedAutoEncoder
 
 
-def plot_loss_curves(
-    train_loss: list[float], eval_loss: list[float], ax: Axes, title: str
-):
-    ax.plot(train_loss, color="tab:blue")
-    ax.plot(eval_loss, color="tab:orange")
-    ax.set_title(title)
+def plot_loss_curves(train_loss: list[float], eval_loss: list[float]):
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 5))
+    for axis, title in zip(axes, ["Training Loss", "Evaluation Loss"]):
+        axis.plot(train_loss, color="tab:blue")
+        axis.plot(eval_loss, color="tab:orange")
+        axis.set_title(title)
+    fig.tight_layout()
+    plt.show()
 
 
 @torch.no_grad()
